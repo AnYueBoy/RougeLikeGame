@@ -3,7 +3,7 @@
  * @Date: 2020-03-07 17:13:07 
  * @Description: 界面管理器 
  * @Last Modified by: l hy
- * @Last Modified time: 2020-03-15 20:48:53
+ * @Last Modified time: 2020-03-08 21:57:27
  */
 
 using System;
@@ -22,8 +22,6 @@ public class UIManager : MonoBehaviour {
     [Header ("ui根节点")]
     public GameObject uiRoot;
 
-    [Header ("游戏场景根节点")]
-    public GameObject gameRoot;
     public static UIManager getInstance () {
         return instance;
     }
