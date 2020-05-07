@@ -3,7 +3,7 @@
  * @Date: 2020-03-09 13:21:19 
  * @Description: 对象池 
  * @Last Modified by: l hy
- * @Last Modified time: 2020-03-09 13:37:29
+ * @Last Modified time: 2020-05-07 23:01:27
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -36,6 +36,7 @@ public class ObjectPool {
 
             if (instance == null) {
                 GameObject gameObject = GameObject.Instantiate<GameObject> (prefab);
+                gameObject.name = prefab.name;
                 subPool.Add (gameObject);
                 instance = gameObject;
             }
@@ -63,7 +64,7 @@ public class ObjectPool {
             }
         }
 
-        Debug.LogError("target"+target+"is not in pool");
+        Debug.LogError ("target" + target + "is not in pool");
     }
 
 }
