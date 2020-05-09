@@ -3,7 +3,7 @@
  * @Date: 2020-03-09 13:21:19 
  * @Description: 对象池 
  * @Last Modified by: l hy
- * @Last Modified time: 2020-05-07 23:01:27
+ * @Last Modified time: 2020-03-09 13:37:29
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +14,9 @@ public class ObjectPool {
     private static ObjectPool instance = null;
 
     private Dictionary<GameObject, List<GameObject>> pool = new Dictionary<GameObject, List<GameObject>> ();
+
+    // 存放预制与实例的关系
+    private Dictionary<GameObject, GameObject> relationShip = new Dictionary<GameObject, GameObject> ();
 
     public static ObjectPool getInstance () {
         if (instance == null) {
@@ -36,7 +39,7 @@ public class ObjectPool {
 
             if (instance == null) {
                 GameObject gameObject = GameObject.Instantiate<GameObject> (prefab);
-                gameObject.name = prefab.name;
+                this.relationShip.Add (gameObject, prefab);
                 subPool.Add (gameObject);
                 instance = gameObject;
             }
@@ -54,17 +57,24 @@ public class ObjectPool {
             return;
         }
 
-        if (pool.ContainsKey (target)) {
-            List<GameObject> subPool = pool[target];
-            for (int i = 0; i < subPool.Count; i++) {
-                if (target == subPool[i]) {
-                    subPool[i].SetActive (false);
-                    return;
-                }
-            }
+        if (!this.relationShip.ContainsKey (target)) {
+            Debug.LogError ("target" + target + "is not exist correspond prefab");
+            return;
         }
 
-        Debug.LogError ("target" + target + "is not in pool");
+        GameObject targetPrefab = this.relationShip[target];
+        if (!pool.ContainsKey (targetPrefab)) {
+            Debug.LogError ("targetPrefab" + targetPrefab + "is not exist correspond pool");
+            return;
+        }
+
+        List<GameObject> subPool = pool[targetPrefab];
+        for (int i = 0; i < subPool.Count; i++) {
+            if (target == subPool[i]) {
+                subPool[i].SetActive (false);
+                break;
+            }
+        }
     }
 
 }
