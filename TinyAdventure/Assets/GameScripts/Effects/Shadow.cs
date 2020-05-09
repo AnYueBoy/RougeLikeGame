@@ -18,10 +18,13 @@ public class Shadow : MonoBehaviour {
 
     private float disapperaSpeed = 0;
 
-    public void init (Sprite targetSprite, Vector3 pos) {
+    private Color selfColor;
+
+    public void init (Sprite targetSprite, Vector3 pos, float scaleX) {
+        this.transform.localScale = new Vector3 (scaleX, 1, 1);
         this.transform.position = pos;
         this.spriteRenderer.sprite = targetSprite;
-        this.shadowTimer = 0;
+        this.selfColor = this.spriteRenderer.color;
         this.disapperaSpeed = this.spriteRenderer.color.a / ConstValue.shadowExitTime;
     }
 
@@ -46,6 +49,12 @@ public class Shadow : MonoBehaviour {
     }
 
     private void recycleSelf () {
+        this.reset ();
         ObjectPool.getInstance ().returnInstance (this.gameObject);
+    }
+
+    private void reset () {
+        this.shadowTimer = 0;
+        this.spriteRenderer.color = this.selfColor;
     }
 }

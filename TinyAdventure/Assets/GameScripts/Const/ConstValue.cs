@@ -33,4 +33,9 @@ public class ConstValue {
     /// </summary>
     public static readonly float shadowExitTime = 1.2f;
 
+    /// <summary>
+    /// 身位大小
+    /// </summary>
+    public static readonly float bodyLength = 0.4f;
+
 }

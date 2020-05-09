@@ -56,6 +56,8 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
+    private float shadowInterval = 0;
+
     private void sprint () {
         if (!this.isSprint) {
             return;
@@ -64,16 +66,9 @@ public class PlayerManager : MonoBehaviour {
         this.sprintTimer += Time.deltaTime;
         if (this.sprintTimer > ConstValue.sprintTime) {
             this.isSprint = false;
+            this.shadowInterval = 0;
             this.sprintTimer = 0;
         }
-
-        GameObject shadowNode = ObjectPool.getInstance ().requestInstance (this.shadowPrefab);
-        shadowNode.transform.SetParent (this.shadowParent);
-        Shadow shadow = shadowNode.GetComponent<Shadow> ();
-        // TODO: 数组管理shadow
-
-        Sprite targetSprite = this.spriteRenderer.sprite;
-        shadow.init (targetSprite, this.transform.position);
 
         float dir = this.transform.localScale.x;
 
@@ -82,5 +77,20 @@ public class PlayerManager : MonoBehaviour {
         if (!this.m_Animator.GetBool ("Run")) {
             this.m_Animator.SetBool ("Run", true);
         }
+
+        this.shadowInterval += Time.deltaTime * ConstValue.sprintSpeed;
+        if (this.shadowInterval < ConstValue.bodyLength) {
+            return;
+        }
+        this.shadowInterval = 0;
+
+        GameObject shadowNode = ObjectPool.getInstance ().requestInstance (this.shadowPrefab);
+        shadowNode.transform.SetParent (this.shadowParent);
+        Shadow shadow = shadowNode.GetComponent<Shadow> ();
+        // TODO: 数组管理shadow
+
+        Sprite targetSprite = this.spriteRenderer.sprite;
+        shadow.init (targetSprite, this.transform.position, this.transform.localScale.x);
+
     }
 }
