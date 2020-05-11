@@ -3,7 +3,7 @@
  * @Date: 2020-05-01 22:18:01 
  * @Description: 常量
  * @Last Modified by: l hy
- * @Last Modified time: 2020-05-11 17:12:57
+ * @Last Modified time: 2020-05-11 19:18:51
  */
 
 public class ConstValue {
@@ -39,7 +39,17 @@ public class ConstValue {
     public static readonly float bodyLength = 0.55f;
 
     /// <summary>
-    /// 射线检测距离
+    /// 冲刺时射线检测距离
     /// </summary>
-    public static readonly float checkDistance = 0.8f;
+    public static readonly float sprintCheckDistance = 0.8f;
+
+    /// <summary>
+    /// 跳跃速度
+    /// </summary>
+    public static readonly float jumpSpeed = 9.0f;
+
+    /// <summary>
+    /// 跳跃时射线检测距离
+    /// </summary>
+    public static readonly float jumpCheckDistance = 1.3f;
 }
