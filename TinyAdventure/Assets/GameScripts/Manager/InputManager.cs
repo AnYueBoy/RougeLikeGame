@@ -3,7 +3,7 @@
  * @Date: 2020-05-01 22:11:13 
  * @Description: 输入管理
  * @Last Modified by: l hy
- * @Last Modified time: 2020-05-07 22:19:31
+ * @Last Modified time: 2020-05-11 19:23:25
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -31,9 +31,7 @@ public class InputManager : MonoBehaviour {
         this.touchStart ();
         this.touchMove ();
         this.touchEnd ();
-        if (Application.isEditor) {
-            this.keyBoardInput ();
-        }
+        this.keyBoardInput ();
     }
 
     private Vector3 touchStartPos = Vector3.zero;
@@ -94,6 +92,9 @@ public class InputManager : MonoBehaviour {
     }
 
     private void keyBoardInput () {
+        if (!Application.isEditor) {
+            return;
+        }
         float horizontalValue = Input.GetAxis ("Horizontal");
         if (Mathf.Abs (horizontalValue) < 0.01) {
             this.moveDirection = Vector3.zero;
