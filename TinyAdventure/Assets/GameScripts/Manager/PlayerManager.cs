@@ -3,7 +3,7 @@
  * @Date: 2020-05-01 21:55:13 
  * @Description: 玩家管理
  * @Last Modified by: l hy
- * @Last Modified time: 2020-05-07 22:43:20
+ * @Last Modified time: 2020-05-11 16:07:28
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -65,6 +65,8 @@ public class PlayerManager : MonoBehaviour {
         if (!this.isSprint) {
             return;
         }
+
+        
 
         this.sprintTimer += Time.deltaTime;
         if (this.sprintTimer > ConstValue.sprintTime) {

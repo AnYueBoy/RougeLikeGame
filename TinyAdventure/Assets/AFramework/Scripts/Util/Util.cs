@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 using UnityEngine;
 
 /*
  * @Author: l hy 
  * @Date: 2019-12-16 23:05:55 
  * @Description: 工具类
- * @Last Modified by: l hy 
- * @Last Modified time: 2019-12-16 23:05:55 
+ * @Last Modified by: l hy
+ * @Last Modified time: 2020-05-11 16:10:02
  */
 
 public class Util {
@@ -19,16 +16,6 @@ public class Util {
     private static float getAspect () {
         float aspect = (float) Screen.width / Screen.height;
         return aspect;
-    }
-
-    /// <summary>
-    /// 清空控制台信息
-    /// </summary>
-    public static void clearConsole () {
-        Type log = typeof (EditorWindow).Assembly.GetType ("UnityEditor.LogEntries");
-
-        var clearMethod = log.GetMethod ("Clear");
-        clearMethod.Invoke (null, null);
     }
 
     /// <summary>
@@ -140,5 +127,23 @@ public class Util {
     /// <param name="array">目标数组</param>
     public static void qucikSort (List<double> array) {
         qSort (array, 0, array.Count - 1);
+    }
+
+    /// <summary>
+    /// 简单2d射线检测（只返回是否检测到目标）      
+    /// </summary>
+    /// <param name="startPos">开始位置</param>
+    /// <param name="direcition">方向</param>
+    /// <param name="distance">距离</param>
+    /// <param name="layerMask">检测层</param>
+    /// <returns></returns>
+    public static bool ray2DCheck (Vector2 startPos, Vector2 direcition, float distance, int layerMask) {
+        RaycastHit2D raycastInfo = Physics2D.Raycast (startPos, direcition, distance, layerMask);
+
+        if (raycastInfo) {
+            return true;
+        }
+
+        return false;
     }
 }
