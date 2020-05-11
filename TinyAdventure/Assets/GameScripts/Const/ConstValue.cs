@@ -3,7 +3,7 @@
  * @Date: 2020-05-01 22:18:01 
  * @Description: 常量
  * @Last Modified by: l hy
- * @Last Modified time: 2020-05-07 22:36:15
+ * @Last Modified time: 2020-05-11 17:12:57
  */
 
 public class ConstValue {
@@ -38,4 +38,8 @@ public class ConstValue {
     /// </summary>
     public static readonly float bodyLength = 0.55f;
 
+    /// <summary>
+    /// 射线检测距离
+    /// </summary>
+    public static readonly float checkDistance = 0.8f;
 }

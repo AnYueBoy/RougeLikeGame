@@ -3,7 +3,7 @@
  * @Date: 2020-05-01 21:55:13 
  * @Description: 玩家管理
  * @Last Modified by: l hy
- * @Last Modified time: 2020-05-11 16:07:28
+ * @Last Modified time: 2020-05-11 17:13:20
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -24,6 +24,8 @@ public class PlayerManager : MonoBehaviour {
     public SpriteRenderer spriteRenderer = null;
 
     private List<Shadow> shadows = new List<Shadow> ();
+
+    public LayerMask layerMask;
 
     public void updateSelf () {
         this.run ();
@@ -66,7 +68,14 @@ public class PlayerManager : MonoBehaviour {
             return;
         }
 
-        
+        float dir = this.transform.localScale.x;
+        // 撞到墙冲刺中断
+        if (Util.ray2DCheck (this.transform.position, new Vector2 (dir, 0), ConstValue.checkDistance, this.layerMask)) {
+            this.isSprint = false;
+            this.shadowInterval = 0;
+            this.sprintTimer = 0;
+            return;
+        }
 
         this.sprintTimer += Time.deltaTime;
         if (this.sprintTimer > ConstValue.sprintTime) {
@@ -74,8 +83,6 @@ public class PlayerManager : MonoBehaviour {
             this.shadowInterval = 0;
             this.sprintTimer = 0;
         }
-
-        float dir = this.transform.localScale.x;
 
         this.transform.Translate (new Vector3 (dir, 0, 0) * ConstValue.sprintSpeed * Time.deltaTime);
 

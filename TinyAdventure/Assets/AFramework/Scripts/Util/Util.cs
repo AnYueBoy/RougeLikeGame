@@ -8,7 +8,7 @@ using UnityEngine;
  * @Date: 2019-12-16 23:05:55 
  * @Description: 工具类
  * @Last Modified by: l hy
- * @Last Modified time: 2020-05-11 16:10:02
+ * @Last Modified time: 2020-05-11 16:53:22
  */
 
 public class Util {
@@ -139,11 +139,22 @@ public class Util {
     /// <returns></returns>
     public static bool ray2DCheck (Vector2 startPos, Vector2 direcition, float distance, int layerMask) {
         RaycastHit2D raycastInfo = Physics2D.Raycast (startPos, direcition, distance, layerMask);
-
         if (raycastInfo) {
             return true;
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// 绘制线段
+    /// </summary>
+    /// <param name="startPos">开始位置</param>
+    /// <param name="direcition">方向</param>
+    /// <param name="distance">距离</param>
+    /// <param name="color">颜色</param>
+    public static void drawLine (Vector3 startPos, Vector3 direcition, float distance, Color color) {
+        Vector3 endPos = startPos + direcition * distance;
+        Debug.DrawLine (startPos, endPos, color);
     }
 }
