@@ -3,7 +3,7 @@
  * @Date: 2020-05-01 21:55:13 
  * @Description: 玩家管理
  * @Last Modified by: l hy
- * @Last Modified time: 2020-05-11 19:41:48
+ * @Last Modified time: 2020-05-11 19:57:08
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -54,7 +54,11 @@ public class PlayerManager : MonoBehaviour {
             return;
         }
 
-        this.transform.localScale = new Vector3 (moveDir.x, 1, 1);
+        if (moveDir.x <= 0) {
+            this.transform.localScale = new Vector3 (-1, 1, 1);
+        } else if (moveDir.x >= 0) {
+            this.transform.localScale = new Vector3 (1, 1, 1);
+        }
 
         this.transform.Translate (moveDir * ConstValue.moveSpeed * Time.deltaTime);
 
