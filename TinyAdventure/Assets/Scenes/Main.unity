@@ -474,9 +474,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca86788fce86f24b80d99abdc1b56ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOpenMultiTouch: 0
+  isOpenMultiTouch: 1
   moveDot: {fileID: 238891455}
-  testText: {fileID: 0}
   triggerRadius: 20
 --- !u!1 &753291675
 GameObject:
