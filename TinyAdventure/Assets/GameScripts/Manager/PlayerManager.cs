@@ -3,7 +3,7 @@
  * @Date: 2020-05-01 21:55:13 
  * @Description: 玩家管理
  * @Last Modified by: l hy
- * @Last Modified time: 2020-05-07 22:43:20
+ * @Last Modified time: 2020-05-11 17:13:20
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -23,9 +23,14 @@ public class PlayerManager : MonoBehaviour {
     [Header ("图片渲染器")]
     public SpriteRenderer spriteRenderer = null;
 
+    private List<Shadow> shadows = new List<Shadow> ();
+
+    public LayerMask layerMask;
+
     public void updateSelf () {
         this.run ();
         this.sprint ();
+        this.refreshShadows ();
     }
 
     private void run () {
@@ -63,14 +68,21 @@ public class PlayerManager : MonoBehaviour {
             return;
         }
 
+        float dir = this.transform.localScale.x;
+        // 撞到墙冲刺中断
+        if (Util.ray2DCheck (this.transform.position, new Vector2 (dir, 0), ConstValue.checkDistance, this.layerMask)) {
+            this.isSprint = false;
+            this.shadowInterval = 0;
+            this.sprintTimer = 0;
+            return;
+        }
+
         this.sprintTimer += Time.deltaTime;
         if (this.sprintTimer > ConstValue.sprintTime) {
             this.isSprint = false;
             this.shadowInterval = 0;
             this.sprintTimer = 0;
         }
-
-        float dir = this.transform.localScale.x;
 
         this.transform.Translate (new Vector3 (dir, 0, 0) * ConstValue.sprintSpeed * Time.deltaTime);
 
@@ -87,10 +99,30 @@ public class PlayerManager : MonoBehaviour {
         GameObject shadowNode = ObjectPool.getInstance ().requestInstance (this.shadowPrefab);
         shadowNode.transform.SetParent (this.shadowParent);
         Shadow shadow = shadowNode.GetComponent<Shadow> ();
-        // TODO: 数组管理shadow
+        if (!this.shadows.Contains (shadow)) {
+            this.shadows.Add (shadow);
+        }
 
         Sprite targetSprite = this.spriteRenderer.sprite;
         shadow.init (targetSprite, this.transform.position, this.transform.localScale.x);
+    }
 
+    private void refreshShadows () {
+        if (this.shadows == null || this.shadows.Count <= 0) {
+            return;
+        }
+
+        for (int i = 0; i < this.shadows.Count; i++) {
+            Shadow shadow = this.shadows[i];
+            if (shadow == null) {
+                continue;
+            }
+
+            if (!shadow.transform.gameObject.activeSelf) {
+                continue;
+            }
+
+            shadow.selfUpdate ();
+        }
     }
 }

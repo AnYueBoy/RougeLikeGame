@@ -367,7 +367,10 @@ MonoBehaviour:
     type: 3}
   shadowParent: {fileID: 2036692653}
   spriteRenderer: {fileID: 839674821}
-  playerBody: {fileID: 294778957}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  testTrans: {fileID: 0}
 --- !u!61 &294778956
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -699,7 +702,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1193854553
 Transform:
   m_ObjectHideFlags: 0
@@ -907,7 +910,7 @@ GameObject:
   - component: {fileID: 1384116431}
   - component: {fileID: 1384116430}
   - component: {fileID: 1384116429}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}

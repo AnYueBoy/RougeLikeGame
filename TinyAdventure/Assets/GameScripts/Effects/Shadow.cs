@@ -28,11 +28,6 @@ public class Shadow : MonoBehaviour {
         this.disapperaSpeed = this.spriteRenderer.color.a / ConstValue.shadowExitTime;
     }
 
-    private void Update () {
-        // TODO: 临时解决
-        this.selfUpdate ();
-    }
-
     public void selfUpdate () {
         this.shadowTimer += Time.deltaTime;
         if (this.shadowTimer > ConstValue.shadowExitTime) {
