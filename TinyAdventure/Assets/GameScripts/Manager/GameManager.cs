@@ -13,6 +13,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     private void Start () {
+        // TODO: 临时解决办法，场景进入成功时发送事件
+        Appcontext.getInstance().setScripts();
         this.inputManager = Appcontext.getInstance ().inputManager;
         this.playerManager = Appcontext.getInstance ().playerManager;
     }
