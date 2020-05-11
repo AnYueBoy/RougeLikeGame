@@ -1,4 +1,5 @@
-﻿/*
+﻿using System.Net.Mime;
+/*
  * @Author: l hy 
  * @Date: 2020-05-01 22:11:13 
  * @Description: 输入管理
@@ -42,6 +43,12 @@ public class InputManager : MonoBehaviour {
         }
 
         Touch touchData = Input.GetTouch (0);
+
+        // 限定虚拟摇杆只能在屏幕左侧
+        if (touchData.position.x >= 960) {
+            return;
+        }
+
         if (touchData.phase == TouchPhase.Began) {
             this.gameObject.transform.position = touchData.position;
             this.touchStartPos = touchData.position;
@@ -55,6 +62,12 @@ public class InputManager : MonoBehaviour {
 
         Touch touchData = Input.GetTouch (0);
         Vector3 movePos = Vector3.zero;
+
+        // 限定虚拟摇杆只能在屏幕左侧
+        if (touchData.position.x >= 960) {
+            return;
+        }
+
         if (touchData.phase == TouchPhase.Moved) {
             movePos = touchData.position;
             Vector3 subVec = movePos - this.touchStartPos;
