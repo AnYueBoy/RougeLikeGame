@@ -23,9 +23,12 @@ public class PlayerManager : MonoBehaviour {
     [Header ("图片渲染器")]
     public SpriteRenderer spriteRenderer = null;
 
+    private List<Shadow> shadows = new List<Shadow> ();
+
     public void updateSelf () {
         this.run ();
         this.sprint ();
+        this.refreshShadows ();
     }
 
     private void run () {
@@ -87,10 +90,30 @@ public class PlayerManager : MonoBehaviour {
         GameObject shadowNode = ObjectPool.getInstance ().requestInstance (this.shadowPrefab);
         shadowNode.transform.SetParent (this.shadowParent);
         Shadow shadow = shadowNode.GetComponent<Shadow> ();
-        // TODO: 数组管理shadow
+        if (!this.shadows.Contains (shadow)) {
+            this.shadows.Add (shadow);
+        }
 
         Sprite targetSprite = this.spriteRenderer.sprite;
         shadow.init (targetSprite, this.transform.position, this.transform.localScale.x);
+    }
 
+    private void refreshShadows () {
+        if (this.shadows == null || this.shadows.Count <= 0) {
+            return;
+        }
+
+        for (int i = 0; i < this.shadows.Count; i++) {
+            Shadow shadow = this.shadows[i];
+            if (shadow == null) {
+                continue;
+            }
+
+            if (!shadow.transform.gameObject.activeSelf) {
+                continue;
+            }
+
+            shadow.selfUpdate ();
+        }
     }
 }
