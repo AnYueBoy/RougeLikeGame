@@ -45,7 +45,7 @@ public class Shadow : MonoBehaviour {
         if (targetAlpha <= 0) {
             targetAlpha = 0;
         }
-        this.spriteRenderer.color = new Color (spriteColor.r, spriteColor.g, spriteColor.b, targetAlpha);
+        this.spriteRenderer.color = new Color (0.5f, 0.5f, 1, targetAlpha);
     }
 
     private void recycleSelf () {

@@ -31,11 +31,11 @@ public class ConstValue {
     /// <summary>
     /// 残影存在时间
     /// </summary>
-    public static readonly float shadowExitTime = 1.2f;
+    public static readonly float shadowExitTime = 0.5f;
 
     /// <summary>
     /// 身位大小
     /// </summary>
-    public static readonly float bodyLength = 0.4f;
+    public static readonly float bodyLength = 0.55f;
 
 }
