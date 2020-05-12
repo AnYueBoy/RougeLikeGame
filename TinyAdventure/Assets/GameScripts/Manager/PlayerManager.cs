@@ -60,6 +60,20 @@ public class PlayerManager : MonoBehaviour {
             this.transform.localScale = new Vector3 (1, 1, 1);
         }
 
+        float dir = this.transform.localScale.x;
+
+        // 撞到墙停止移动
+        if (
+            Util.ray2DCheck (this.transform.position, new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask) ||
+            Util.ray2DCheck (this.transform.position + new Vector3 (0, -0.3f, 0), new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask) ||
+            Util.ray2DCheck (this.transform.position + new Vector3 (0, -0.6f, 0), new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask)) {
+
+            if (this.m_Animator.GetBool ("Run")) {
+                this.m_Animator.SetBool ("Run", false);
+            }
+            return;
+        }
+
         this.transform.Translate (moveDir * ConstValue.moveSpeed * Time.deltaTime);
 
         if (!this.m_Animator.GetBool ("Run")) {
@@ -83,13 +97,20 @@ public class PlayerManager : MonoBehaviour {
     /// 冲刺
     /// </summary>
     private void sprint () {
+        // float testDir = this.transform.localScale.x;
+        // Util.drawLine (this.transform.position, new Vector2 (testDir, 0), ConstValue.sprintCheckDistance, Color.red);
+        // Util.drawLine (this.transform.position + new Vector3 (0, -0.3f, 0), new Vector2 (testDir, 0), ConstValue.sprintCheckDistance, Color.red);
+        // Util.drawLine (this.transform.position + new Vector3 (0, -0.6f, 0), new Vector2 (testDir, 0), ConstValue.sprintCheckDistance, Color.red);
         if (!this.isSprint) {
             return;
         }
 
         float dir = this.transform.localScale.x;
-        // 撞到墙冲刺中断
-        if (Util.ray2DCheck (this.transform.position, new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask)) {
+        // 撞到墙冲刺中断，三段检测
+        if (
+            Util.ray2DCheck (this.transform.position, new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask) ||
+            Util.ray2DCheck (this.transform.position + new Vector3 (0, -0.3f, 0), new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask) ||
+            Util.ray2DCheck (this.transform.position + new Vector3 (0, -0.6f, 0), new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask)) {
             this.isSprint = false;
             this.shadowInterval = 0;
             this.sprintTimer = 0;
