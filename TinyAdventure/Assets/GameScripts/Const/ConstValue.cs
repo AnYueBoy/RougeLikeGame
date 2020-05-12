@@ -46,7 +46,7 @@ public class ConstValue {
     /// <summary>
     /// 跳跃速度
     /// </summary>
-    public static readonly float jumpSpeed = 9.0f;
+    public static readonly float jumpSpeed = 7f;
 
     /// <summary>
     /// 跳跃时射线检测距离

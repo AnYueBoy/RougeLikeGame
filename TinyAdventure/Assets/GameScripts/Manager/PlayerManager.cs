@@ -128,18 +128,28 @@ public class PlayerManager : MonoBehaviour {
 
     private bool isJump = false;
 
+    private bool isSecondJump = false;
+
     public void jump () {
         if (!this.m_Animator.GetBool ("Jump")) {
             this.m_Animator.SetBool ("Jump", true);
+        }
+
+        // 未进行二段跳且处于跳跃状态且当前动画为跳跃时且跳跃动画播放完毕时才进行二段跳
+        AnimatorStateInfo currentAnimaInfo = this.m_Animator.GetCurrentAnimatorStateInfo (0);
+        if (!this.isSecondJump && this.isJump && currentAnimaInfo.IsName ("jump") && currentAnimaInfo.normalizedTime >= 1.0f) {
+            this.m_Animator.SetTrigger ("SecondJump");
+            this.bodyRigidbody.velocity = Vector3.up * ConstValue.jumpSpeed;
+            this.bodyCollider.enabled = false;
+            this.isSecondJump = true;
         }
 
         if (!this.isJump) {
             this.isJump = true;
             this.bodyRigidbody.velocity = Vector3.up * ConstValue.jumpSpeed;
             this.bodyCollider.enabled = false;
+            this.isSecondJump = false;
         }
-
-        // TODO: 二段跳
     }
 
     /// <summary>
