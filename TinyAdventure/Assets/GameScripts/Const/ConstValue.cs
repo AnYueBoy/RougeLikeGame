@@ -9,11 +9,6 @@
 public class ConstValue {
 
     /// <summary>
-    /// 摇杆最大移动半径
-    /// </summary>
-    public static readonly float moveMaxRadius = 160;
-
-    /// <summary>
     /// 移动速度
     /// </summary>
     public static readonly float moveSpeed = 4;
