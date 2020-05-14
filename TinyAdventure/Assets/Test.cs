@@ -8,9 +8,15 @@ public class Test : MonoBehaviour {
 
     }
 
+    private bool isStartLoad = false;
+
     // Update is called once per frame
     void Update () {
         if (Input.GetMouseButtonDown (0)) {
+            if (isStartLoad) {
+                return;
+            }
+            this.isStartLoad = true;
             Appcontext.getInstance ().loadNextScene (SceneSwitchEnum.CIRCLE);
         }
     }
