@@ -27,7 +27,29 @@ public class InputManager : MonoBehaviour {
 
     private Vector3 moveDirection = Vector3.zero;
 
-    public void updateSelf () { }
+    public void updateSelf () {
+        this.editorInput ();
+    }
+
+    private void editorInput () {
+        if (!Application.isEditor) {
+            return;
+        }
+        float direction = Input.GetAxis ("Horizontal");
+        if (Mathf.Abs (direction) < 0.1f) {
+            this.moveDirection = Vector3.zero;
+            return;
+        }
+
+        if (direction < 0) {
+            this.moveDirection = Vector3.left;
+            return;
+        }
+
+        if (direction > 0) {
+            this.moveDirection = Vector3.right;
+        }
+    }
 
     public void pressLeftDown () {
         this.moveDirection = Vector3.left;
