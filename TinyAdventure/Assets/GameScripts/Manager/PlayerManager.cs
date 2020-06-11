@@ -8,6 +8,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour {
 
@@ -32,6 +33,9 @@ public class PlayerManager : MonoBehaviour {
     [Header ("射线检测层")]
     public LayerMask layerMask;
 
+    [Header ("冲刺技能遮罩")]
+    public Image sprintSkillImage = null;
+
     private List<Shadow> shadows = new List<Shadow> ();
 
     public void updateSelf () {
@@ -40,6 +44,7 @@ public class PlayerManager : MonoBehaviour {
         this.jumpCheck ();
         this.refreshShadows ();
         this.keyBoardInput ();
+        this.sprintEffect ();
     }
 
     /// <summary>
@@ -83,11 +88,44 @@ public class PlayerManager : MonoBehaviour {
 
     private bool isSprint = false;
 
+    private bool clickSprint = false;
+
     private float sprintTimer = 0;
 
+    private float sprintSkillTimer = 0;
+
     public void pressSprint () {
+        if (this.clickSprint) {
+            return;
+        }
+
+        this.clickSprint = true;
+
         if (!this.isSprint) {
             this.isSprint = true;
+        }
+    }
+
+    private void sprintEffect () {
+        if (!this.clickSprint) {
+            return;
+        }
+
+        if (!this.sprintSkillImage.gameObject.activeSelf) {
+            this.sprintSkillImage.gameObject.SetActive (true);
+        }
+
+        if (this.sprintSkillImage.gameObject.activeSelf) {
+            this.sprintSkillTimer += Time.deltaTime;
+            float fillValue = 1 - (this.sprintSkillTimer / ConstValue.sprintCoolDown);
+            fillValue = Mathf.Clamp01 (fillValue);
+            if (fillValue <= 0) {
+                this.sprintSkillImage.gameObject.SetActive (false);
+                this.sprintSkillImage.fillAmount = 1;
+                this.sprintSkillTimer = 0;
+                this.clickSprint = false;
+            }
+            this.sprintSkillImage.fillAmount = fillValue;
         }
     }
 

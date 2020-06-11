@@ -47,4 +47,9 @@ public class ConstValue {
     /// 跳跃时射线检测距离
     /// </summary>
     public static readonly float jumpCheckDistance = 1.3f;
+
+    /// <summary>
+    /// 冲刺技能冷却时间
+    /// </summary>
+    public static readonly float sprintCoolDown = 1.0f;
 }
