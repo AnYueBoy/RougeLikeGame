@@ -7,9 +7,10 @@
  */
 using System.Collections;
 using System.Collections.Generic;
+using UFramework.FrameUtil;
+using UFramework.GameCommon;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class PlayerManager : MonoBehaviour {
 
     [Header ("动画状态机")]
@@ -69,9 +70,9 @@ public class PlayerManager : MonoBehaviour {
 
         // 撞到墙停止移动
         if (
-            Util.ray2DCheck (this.transform.position, new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask) ||
-            Util.ray2DCheck (this.transform.position + new Vector3 (0, -0.3f, 0), new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask) ||
-            Util.ray2DCheck (this.transform.position + new Vector3 (0, -0.6f, 0), new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask)) {
+            CommonUtil.ray2DCheck (this.transform.position, new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask) ||
+            CommonUtil.ray2DCheck (this.transform.position + new Vector3 (0, -0.3f, 0), new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask) ||
+            CommonUtil.ray2DCheck (this.transform.position + new Vector3 (0, -0.6f, 0), new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask)) {
 
             if (this.m_Animator.GetBool ("Run")) {
                 this.m_Animator.SetBool ("Run", false);
@@ -146,9 +147,9 @@ public class PlayerManager : MonoBehaviour {
         float dir = this.transform.localScale.x;
         // 撞到墙冲刺中断，三段检测
         if (
-            Util.ray2DCheck (this.transform.position, new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask) ||
-            Util.ray2DCheck (this.transform.position + new Vector3 (0, -0.3f, 0), new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask) ||
-            Util.ray2DCheck (this.transform.position + new Vector3 (0, -0.6f, 0), new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask)) {
+            CommonUtil.ray2DCheck (this.transform.position, new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask) ||
+            CommonUtil.ray2DCheck (this.transform.position + new Vector3 (0, -0.3f, 0), new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask) ||
+            CommonUtil.ray2DCheck (this.transform.position + new Vector3 (0, -0.6f, 0), new Vector2 (dir, 0), ConstValue.sprintCheckDistance, this.layerMask)) {
             this.isSprint = false;
             this.shadowInterval = 0;
             this.sprintTimer = 0;
@@ -224,7 +225,7 @@ public class PlayerManager : MonoBehaviour {
                 this.bodyCollider.enabled = true;
             }
 
-            if (Util.ray2DCheck (this.transform.position, Vector3.down, ConstValue.jumpCheckDistance, this.layerMask)) {
+            if (CommonUtil.ray2DCheck (this.transform.position, Vector3.down, ConstValue.jumpCheckDistance, this.layerMask)) {
                 this.isJump = false;
                 if (this.m_Animator.GetBool ("Jump")) {
                     this.m_Animator.SetBool ("Jump", false);

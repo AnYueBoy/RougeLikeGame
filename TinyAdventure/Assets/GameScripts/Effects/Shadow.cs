@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UFramework.GameCommon;
 /*
- * @Author: l hy 
- * @Date: 2020-05-07 21:57:16 
- * @Description: 残影效果 
- * @Last Modified by: l hy
- * @Last Modified time: 2020-05-07 22:50:56
- */
+* @Author: l hy 
+* @Date: 2020-05-07 21:57:16 
+* @Description: 残影效果 
+* @Last Modified by: l hy
+* @Last Modified time: 2020-05-07 22:50:56
+*/
 public class Shadow : MonoBehaviour {
 
     [Header ("图片渲染器")]
